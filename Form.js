@@ -52,7 +52,8 @@ function scan( node, inputs, prefix ){
             }else{ 
                 inputs[key].push( node );
             }
-        }else{
+        }else if( node.type !== "image" && node.type !== "file" 
+            && node.type !== "button" && node.type !== "reset" && node.type !== "submit"){
             inputs[key] = node;
         }
         return;
