@@ -1,46 +1,83 @@
 ﻿<html>
 <head>
     <title>Form Tester</title>
-    <link rel="stylesheet" type="text/css" href="bootstrap-1.2.0.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <style type="text/css">
+        #user-info{
+            margin-top: 20px;
+        }
+        
+        input[type=text]{
+            height: 27px;
+        }
+        
+        input[type=radio], input[type=checkbox]{
+            vertical-align: text-bottom;
+        }
+        
+        .input label{
+            float: none;
+            margin: 0 20px 0 4px;
+        }
+        
+        .input-radio, .input-checkbox{
+            padding-top: 4px;
+        }
+    </style>
 </head>
 <body>
-<div id="myform">
-    <div>
-        <label>语言：</label>
-        <input type="text" name="name" class="xlarge">
+<form id="user-info">
+    <fieldset>
+        <legend>编辑用户信息</legend>
+    </fieldset>
+    <div class="clearfix">
+        <label>姓名：</label>
+        <div class="input">
+            <input type="text" name="name" class="xlarge">
+        </div>
     </div>
-    <div>
-        <label>语言：</label>
-        <textarea name="desc"></textarea>
-    </div>
-    <div>
-        <label>语言：</label>
-        <input type="checkbox" name="language" value="Chinese">Chinese
-        <input type="checkbox" name="language" value="English">English
-    </div>
-    <div>
+    <div class="clearfix">
         <label>性别：</label>
-        <input type="radio" name="gender" value="m">male
-        <input type="radio" name="gender" value="f">female
+        <div class="input input-radio">
+            <input type="radio" name="gender" value="m" id="fui-m"><label for="fui-m">男性</label>
+            <input type="radio" name="gender" value="f" id="fui-f"><label for="fui-f">女性</label>
+        </div>
     </div>
-    <div>
+    <div class="clearfix">
+        <label>简介：</label>
+        <div class="input">
+            <textarea name="desc" class="xlarge"></textarea>
+        </div>
+    </div>
+    <div class="clearfix">
+        <label>语言：</label>
+        <div bind="details" class="input input-checkbox">
+            <input type="checkbox" name="language" value="Chinese" id="fui-c"><label for="fui-c">中文</label>
+            <input type="checkbox" name="language" value="English" id="fui-e"><label for="fui-e">英文</label>
+        </div>
+    </div>
+    <div class="clearfix">
         <label>学校：</label>
-        <select name="school">
-            <option value="">Please select</option>
-            <option value="HFUT">HFUT</option>
-            <option value="NOT">NOT</option>
-        </select>
+        <div bind="details" class="input">
+            <select name="school" class="xlarge">
+                <option value="">请选择毕业院校</option>
+                <option value="HFUT">HFUT</option>
+                <option value="NOT">NOT</option>
+            </select>
+        </div>
     </div>
-    <div>
+    <div class="clearfix">
         <label>运动：</label>
-        <select name="sports" multiple>
-            <option value="">Please select</option>
-            <option value="Basketball">Basketball</option>
-            <option value="Football">Football</option>
-            <option value="PingPong">PingPong</ption>
-        </select>
+        <div bind="details" class="input">
+            <select name="sports" multiple class="xlarge">
+                <option value="">请选择喜爱的体育项目</option>
+                <option value="Basketball">篮球</option>
+                <option value="Football">足球</option>
+                <option value="PingPong">乒乓球</ption>
+            </select>
+        </div>
     </div>
-</div>
+</form>
 <div class="actions">
     <input name="fetch" type="button" value="获取数据" class="btn primary">
 </div>
@@ -52,16 +89,16 @@
 $(function(){
 
     var user = { 
-        name: "sofosogo", 
-        desc:"SE", 
+        name: "sofosogo",
+        gender: "m",
+        desc:"SE",
         details:{
-            language: ["English", "Chinese"], 
-            gender: "m", 
+            language: ["English", "Chinese"],
             school: "HFUT",
             sports: ["Basketball", "PingPong"]
         }
     };
-    var form = Form.create( document.getElementById("myform") );
+    var form = Form.create( document.getElementById("user-info") );
     form.fill( user );
     
     $(document.body).find("input[name=fetch]").click(function(){
