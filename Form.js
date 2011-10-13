@@ -39,7 +39,6 @@ function scan( node, inputs, prefix ){
     if( tagName === "input" || tagName === "textarea" || tagName === "select" ){
         prefix = prefix.concat( node.getAttribute("name") );
         var key = prefix.join(".");
-        // radio and checkbox may have more than one input node.
         if( node.type === "radio" || node.type === "checkbox" ){
             if( !inputs[key] ){
                 inputs[key] = [node];
@@ -119,7 +118,7 @@ function fetch( inputs ){
                 if( node[i].checked ) arr.push( node[i].value );
             }
             if( i > 1 ) set( data, k, arr );
-            else if( arr[0] ) set( data, k, arr[0] );
+            else if( arr[0] ) set( data, k, arr[0] ); // only one checkbox
         }else if( type === "select-multiple" ){
             var arr = [];
             var options = node.childNodes;
