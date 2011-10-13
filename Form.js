@@ -38,20 +38,15 @@ function scan( node, inputs, prefix ){
     var tagName = node.tagName.toLowerCase();
     if( tagName === "input" || tagName === "textarea" || tagName === "select" ){
         prefix = prefix.concat( node.getAttribute("name") );
-        //var type = tagName;
-        //if( tagName === "input" ){
-        //    type = node.getAttribute("type").toLowerCase() || "text";
-        //}else if( tagName === "select" && node.getAttribute("multiple") !== null && node.getAttribute("multiple") !== false ){ 
-        //    // FUCK IE not support node.hasAttribute("multiple")
-        //    type = "multiple";
-        //}
         var key = prefix.join(".");
+        // radio and checkbox may have more than one input node.
         if( node.type === "radio" || node.type === "checkbox" ){
             if( !inputs[key] ){
                 inputs[key] = [node];
             }else{ 
                 inputs[key].push( node );
             }
+        // ignore these input node listing in below.
         }else if( node.type !== "image" && node.type !== "file" 
             && node.type !== "button" && node.type !== "reset" && node.type !== "submit"){
             inputs[key] = node;
@@ -123,12 +118,14 @@ function fetch( inputs ){
             for( var i = 0; i < node.length; i++ ){
                 if( node[i].checked ) arr.push( node[i].value );
             }
-            set( data, k, arr );
+            if( i > 1 ) set( data, k, arr );
+            else if( arr[0] ) set( data, k, arr[0] );
         }else if( type === "select-multiple" ){
             var arr = [];
             var options = node.childNodes;
             for( var i = 0; i < options.length; i++ ){
-                if( options[i].nodeType === 1 && options[i].selected ) arr.push( options[i].value );
+                if( options[i].nodeType === 1 && options[i].selected ) 
+                    arr.push( options[i].value );
             }
             set( data, k, arr );
         }else{

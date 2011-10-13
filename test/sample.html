@@ -74,6 +74,12 @@
             </select>
         </div>
     </div>
+    <div class="clearfix">
+        <label></label>
+        <div class="input">
+            <input type="checkbox" name="confirmed" value="1" id="fui-cf"><label for="fui-cf">允许别人查看我的信息。</label>
+        </div>
+    </div>
 </form>
 <div class="actions">
     <input name="fetch" type="button" value="获取数据" class="btn primary">
@@ -93,7 +99,8 @@ $(function(){
             language: ["English", "Chinese"],
             school: "HFUT",
             sports: ["Basketball", "PingPong"]
-        }
+        },
+        confirmed: "1"
     };
     var form = Form.create( document.getElementById("user-info") );
     form.fill( user );
